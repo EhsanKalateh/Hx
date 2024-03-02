@@ -1,0 +1,145 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .paper{
+        background-color:#eee;
+        border-radius:5px;
+        padding:10px
+        display: grid;
+
+    }
+    .infoTable{
+        padding:10px;
+        display: grid;
+        column-gap: 3px;
+        grid-template-columns: 0.6fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr
+    }
+    .cell{
+        border:1px;
+    }
+    .hx{
+        background-color:#f9f9f9;
+        padding:10px;
+        margin:15px;
+        border-radius:5px;
+    }
+    .editDelete{
+        {% comment %} background-color:#f1f1f1; {% endcomment %}
+        position:fixed;
+        bottom:0px;
+        padding:15px;
+        right:0px;
+        border-radius:10px;
+    }
+    a.float{
+        margin-top:5px;
+        margin-right: 5px;
+        width:100px;
+    }
+    .vital{
+        left:20px;
+        width: 15%;
+        background-color:#ffb;
+        padding:10px;
+        margin:15px;
+        border-radius:5px;
+        display: grid;
+        column-gap: 3px;
+        grid-template-columns: 0.6fr 1fr;
+    }
+    .hi {
+        column-span: all;
+    }
+</style>
+
+<div class="article-entry" style='margin-left:50px; margin-right:50px'>
+<h2>{{ object.title }}</h2>
+<p dir="ltr" style='margin-left:10px;'> {{ object.date_created|date:"d M y" }}  &emsp; By {{ case.author.first_name }} {{ case.author.last_name }} | {{ case.author.degree }} </p>
+<p>{{ object.description|safe }}</p>
+<p>
+    {{ case.pretext|safe }}
+</p>
+<div class="paper">
+    <h5 style="padding:15px 15px 0px 10px"> شرح حال و معاینۀ فیزیکی:</h5>
+    <hr/>
+    <div class="infoTable">
+        <div class="cell"> جنسیت: {{ case.gender }} </div> 
+        <div class="cell"> وضعیت زناشویی: {{ case.marriage }} </div> 
+        <div class="cell"> پیشه: {{ case.job }} </div>
+        <div class="cell"> پزشک معالج: {{ case.doctor }} </div>
+        <div class="cell"> محل مراجعه: {{ case.location }} </div>
+
+        <div class="cell">{{ case.age }} ساله </div>
+        <div class="cell">منبع شرح حال: {{ case.source }} </div>
+        <div class="cell"> محل زندگی: {{ case.dwelling }} </div>
+        <div class="cell"> میزان قابل اعتماد بودن: {{ case.reliability }}/5</div>
+        <div class="cell"> مرکز درمانی: {{ case.setting }} </div>
+    </div>
+    <div class="hx"><b>CC: </b>{{ case.cc }}</div>
+    <div class="hx"><b>PI: </b>{{ case.pi }}</div>
+    <div dir="ltr" class="vital">
+        <div class="hi"><b>Vital Signs:</b></div><hr/>
+        <div>PR: {{ case.PR }}</div>
+        <div>BP: {{ case.BP_S }}/{{ case.BP_D }}</div>
+        <div>RR: {{ case.RR }}</div>
+    </div>
+    <div class="hx"><b>PMH: </b>{{ case.pmh }}</div>
+    {% if case.drg %}
+    <div class="hx"><b>Drugs: </b>{{ case.drg }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار دارو یا مدۀ ویژه‌ای مصرف <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    {% if case.sh %}
+    <div class="hx"><b>SH: </b>{{ case.sh }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار Social Historyای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+    {% if case.fh %}
+    <div class="hx"><b>FH: </b>{{ case.fh }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار Family Historyای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    {% if case.alg %}
+    <div class="hx"><b>Allergy: </b>{{ case.alg }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار آلرژی‌ای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    <div class="hx"><b>Physical Examination and Review of Systems:</b> <br/>{{ case.phe }}</div>
+    <div class="hx"><b>Other Data: </b><br/>{{ case.dat }}</div>
+    <div class="hx"><b>Summary: </b>{{ case.summary }}</div>
+    <div class="hx"><b>Primary Dx:</b> <br/>{{ case.pdx }}</div>
+    <div class="hx"><b>Action:</b> <br/>{{ case.act }}</div>
+
+</div>
+    <hr/>
+<p class="editDelete"><a href="{% url 'case_edit' case.slug %}" class="btn btn-warning float">ویرایش</a>
+    <br/>
+<a href="{% url 'case_delete' case.slug %}" class="btn btn-danger float">حذف</a>
+<br/>
+{%if case.followup_set.all %}
+<div class="paper">
+    <h5 style="margin:15px">یادداشت‌های روزانه و پیگیری‌ها:</h5>
+{% for note in case.followup_set.all %}
+<div class="hx">
+    <span class="font-weight-bold">
+    <h6>روز {{ note.date }} پس از بستری: </h6>
+    </span>
+    {{ note.text }}
+</div>
+{% endfor %}
+{%else%}
+<span></span>
+{%endif%}
+
+</div>
+<br/>
+</div>
+
+{% endblock content %}

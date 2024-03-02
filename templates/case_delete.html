@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 dir="ltr">Delete</h1>
+<form action="" method="post">{% csrf_token %}
+<p>آیا از حذف
+    <b>"{{ case.title }}"</b>
+    اطمینان دارید؟</p>
+<button class="btn btn-danger ml-2" type="submit">Confirm</button>
+</form>
+{% endblock content %}

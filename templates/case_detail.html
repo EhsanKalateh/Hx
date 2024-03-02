@@ -1,0 +1,145 @@
+
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+{% block content %}
+{% if case.verified %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% comment %} <div class="article-entry" style='margin-left:50px; margin-right:50px'> {% endcomment %}
+<h2>{{ object.title }}</h2>
+<p dir="ltr" style='margin-left:10px;'> {{ object.date_created|date:"d M y" }}  &emsp; By {{ case.author.first_name }} {{ case.author.last_name }} | {{ case.author.degree }} </p>
+<p style='margin-right:10px;'>
+    {{ case.pretext|safe }}
+</p>
+<div class="paper">
+    <h5 class='spanTwo' style="padding:15px 15px 0px 10px"> شرح حال و معاینۀ فیزیکی:</h5>
+    <hr/ class="spanTwo">
+    <div class="infoTable spanTwo">
+        <div class="cell"> جنسیت: {{ case.gender }} </div> 
+        <div class="cell"> وضعیت زناشویی: {{ case.marriage }} </div> 
+        <div class="cell"> پیشه: {{ case.job }} </div>
+        <div class="cell"> پزشک معالج: {{ case.doctor }} </div>
+        <div class="cell"> محل مراجعه: {{ case.location }} </div>
+        <hr/ class="myHR" style="grid-column: span 5;">
+        <div class="cell">{{ case.age }} ساله </div>
+        <div class="cell">منبع شرح حال: {{ case.source }} </div>
+        <div class="cell"> محل زندگی: {{ case.dwelling }} </div>
+        <div class="cell"> میزان قابل اعتماد بودن: {{ case.reliability }}/5</div>
+        <div class="cell"> مرکز درمانی: {{ case.setting }} </div>
+    </div>
+    <div class="hx"><b>CC: </b>{{ case.cc }}</div>
+
+    {% if case.PR or case.BP_S or case.RR or case.Temp %}
+        <div dir="ltr" class="vital">
+        <div class="spanTwo vsText"><b>Vital Signs:</b></div>
+        <div>PR: {{ case.PR }}</div>
+        <div>BP: {{ case.BP_S }}/{{ case.BP_D }}</div>
+        <div>RR: {{ case.RR }}</div>
+        {% if case.SPO2_O %}
+        <div>SP<sub>O&#8322;</sub>: {{ case.SPO2_O }}</div>
+        {% endif %}
+        <div>T: {{ case.Temp }}&#176;C</div>
+        {% if case.SPO2_O %}
+        <div>SP<sub>O&#8322;</sub><i>With</i> O&#8322;: {{ case.SPO2_N }}</div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div dir="ltr" class="vital">
+        <div class="spanTwo"><b>No Vital Sign Recorded</b></div>
+    </div>
+    {% endif %}
+    <div class="hx"><b>PI: </b>{{ case.pi }}</div>
+
+    <div class="hx"><b>PMH: </b>{{ case.pmh }}</div>
+    {% if case.drg %}
+    <div class="hx"><b>Drugs: </b>{{ case.drg }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار دارو یا مادۀ ویژه‌ای مصرف <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    {% if case.sh %}
+    <div class="hx"><b>SH: </b>{{ case.sh }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار Social Historyای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+
+    {% if case.alg %}
+    <div class="hx"><b>Allergy: </b>{{ case.alg }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار آلرژی‌ای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    {% if case.fh %}
+    <div class="hx"><b>FH: </b>{{ case.fh }}</div>
+    {% else %}
+    <p style="margin:20px">بیمار Family Historyای را ذکر <u>نمی‌کند</u>.</p>
+    {% endif %}
+
+    <div class="hx"><b>Other Data: </b><br/>{{ case.dat }}</div>
+    <div class="hx"><b>Physical Examination and Review of Systems:</b> <br/>{{ case.phe }}</div>
+    <div class="hx" style="background-color:#ffd"><b>Summary: </b>{{ case.summary }}</div>
+    <div class="hx"><b>Primary Dx:</b> <br/>{{ case.pdx }}</div>
+    <div class="hx"><b>Action:</b> <br/>{{ case.act }}</div>
+
+</div>
+    <hr/>
+
+{% comment %} {%if case.followup_set.all %}
+<div class="paper">
+    <h5 style="margin:15px">یادداشت‌های روزانه و پیگیری‌ها:</h5>
+{% for note in case.followup_set.all %}
+<div class="hx spanTwo">
+    <span class="font-weight-bold">
+    <h6>روز {{ note.date }} پس از بستری: </h6>
+    </span>
+    {{ note.text }}
+</div>
+{% endfor %}
+{%else%}
+<span></span>
+{%endif%} 
+ </div>
+{% if user.username == case.author.username %}
+<h4 class="mt-3">Add a Daily Note</h4>
+<form action="" method="post" >{% csrf_token %}
+{{ form|crispy }}
+<button class="btn btn-success ml-2" type="submit">Save</button>
+</form>
+{%endif%}
+<br/> <hr>
+<div> {% endcomment %}
+    <h4>Comments</h4>
+    {% for comment in case.comment_set.all %}
+    <p>{{ comment.author }} &middot; {{ comment }}</p>
+    {% endfor %}
+    <hr>
+</div>
+<div>
+<h4>Add a comment</h4>
+<form action="" method="post">{% csrf_token %}
+{{ form|crispy }}
+<button class="btn btn-success ml-2" type="submit">Save</button>
+</form>
+</div>
+{% else %}
+<h2>این مطلب هنوز به تایید ادمین نرسیده است.</h2>
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/>
+
+{% endif %}
+{% endblock content %}
+
+{% block sidebarLeft %}
+{% if user.username == case.author.username %}
+
+<div class="editDelete"><a href="{% url 'case_edit' case.slug %}" class="btn btn-warning">ویرایش</a>
+    <a href="{% url 'case_delete' case.slug %}" class="btn btn-danger">حذف</a></div>
+{% endif %}
+{% endblock sidebarLeft %}
+

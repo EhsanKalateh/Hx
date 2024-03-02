@@ -1,0 +1,240 @@
+    .vazirmatn {
+        font-family: "Vazirmatn", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+    }
+    
+    .myHeader {
+        grid-area: header;
+    }
+    
+    .gridTwoC {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .myMain {
+        grid-area: main;
+        padding: 15px;
+    }
+    
+    .sidebarRight {
+        grid-area: sidebarRight;
+        background-color: #f1fff1;
+        display: flex;
+        /* justify-content: center; */
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    #dropdownUser1 {
+        text-align: center;
+        top: 10px;
+    }
+    
+    .sidebarLeft {
+        grid-area: sidebarLeft;
+        background-color: #f1f1ff;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .myFooter {
+        grid-area: footer;
+        background-color: #705697;
+    }
+    
+    .myFooter p {
+        color: rgb(240, 240, 240);
+        padding: 15px;
+        margin: 0;
+    }
+    
+    .myContainer {
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        grid-template-rows: auto;
+        grid-template-areas: "sidebarLeft  header sidebarRight" "sidebarLeft  main sidebarRight" "sidebarLeft  footer sidebarRight";
+    }
+    
+    img.logo {
+        margin: 0 1.5rem;
+        position: fixed;
+        top: 15px
+    }
+    
+    .paper {
+        background-color: #eee;
+        border-radius: 10px;
+        padding: 15px 10px;
+        display: grid;
+        width: 100%;
+        display: grid;
+        column-gap: 3px;
+        grid-template-columns: 1fr 0.4fr;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    }
+    
+    .infoTable {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 0.6fr 1fr 0.6fr 1fr 1fr;
+        /* gap: 5px; */
+        flex-direction: row;
+        flex-basis: 70px;
+        flex-wrap: wrap;
+    }
+    
+    .cell {
+        border-style: hidden solid hidden solid;
+        border-color: #ddd;
+        border-width: 0.5px;
+        text-align: center;
+    }
+    
+    .hx {
+        background-color: #f9f9f9;
+        padding: 10px;
+        margin: 5px 10px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    
+    .sidebarLeft .editDelete {
+        background-color: none;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: strech;
+        position: fixed;
+        align-items: center;
+        bottom: 10px;
+        /* width: 80%; */
+        /* left: 0px; */
+        border-radius: 10px;
+        align-content: flex-end;
+    }
+    
+    .editDelete a {
+        width: 80%;
+        margin: 10px;
+    }
+    
+    a.float {
+        margin: 5px 20px;
+        width: 110px;
+    }
+    
+    .vital {
+        background-color: #ffe0e0;
+        padding: 10px;
+        margin: 5px 10px;
+        border-radius: 10px;
+        display: grid;
+        column-gap: 3px;
+        row-gap: 5px;
+        grid-template-columns: 0.6fr 1fr;
+        grid-row: span 2;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    
+    vsText {
+        border-style: hidden hidden solid hidden;
+        border-color: #2e2e2e;
+        border-width: 0.5px;
+    }
+    
+    .spanTwo {
+        grid-column: span 2;
+    }
+    
+    .myHR {
+        border: 2px solid #ddd;
+    }
+    
+    button.fix {
+        position: fixed;
+        bottom: 50px;
+        left: 50px;
+    }
+    
+    textarea {
+        height: 150px
+    }
+    
+    .createForm {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+    
+    .spanFour {
+        grid-column: span 4;
+    }
+    
+    @media (max-width: 600px) {
+        img.logo {
+            margin: 0 7px;
+            position: fixed;
+            top: 15px
+        }
+        .myContainer {
+            display: grid;
+            grid-template-columns: 15% 85%;
+            grid-template-rows: auto;
+            grid-template-areas: "sidebarLeft  header" "sidebarLeft  sidebarRight" "sidebarLeft main" "sidebarLeft  footer";
+        }
+        .sidebarRight {
+            grid-area: sidebarRight;
+            background-color: #f1fff1;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .editDelete {
+            background-color: none;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            align-items: center;
+            justify-content: center;
+            bottom: 5px;
+            border-radius: 5px;
+        }
+        .editDelete a {
+            /* width: 80%; */
+            /* margin: 5% 10% 0% 10%; */
+            font-size: 12px;
+            text-align: center;
+        }
+        .paper {
+            background-color: #eee;
+            border-radius: 10px;
+            padding: 10px;
+            display: grid;
+            width: 100%;
+            column-gap: 3px;
+            grid-template-columns: 1fr 0.4fr;
+        }
+        .hx {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 5px 5px;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+        .vital {
+            background-color: #ffe0e0;
+            padding: 10px;
+            margin: 5px 5px;
+            border-radius: 5px;
+            display: flex;
+            row-gap: 5px;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+    }
